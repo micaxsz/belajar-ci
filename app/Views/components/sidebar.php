@@ -16,20 +16,17 @@
                 <span>Keranjang</span>
             </a>
         </li><!-- End Keranjang Nav -->
-
-        <?php
-        if (session()->get('role') == 'admin') {
-            ?>
-            <li class="nav-item">
-                <a class="nav-link <?php echo (uri_string() == 'produk') ? "" : "collapsed" ?>" href="produk">
-                    <i class="bi bi-receipt"></i>
-                    <span>Produk</span>
-                </a>
-            </li><!-- End Produk Nav -->
-        </ul>
-        <?php
-        }
-        ?>
-
+        <li class="nav-item">
+            <a class="nav-link <?php echo (uri_string() == 'produk') ? "" : "collapsed" ?>" href="produk">
+                <i class="bi bi-receipt"></i>
+                <span>Produk</span>
+            </a>
+        </li><!-- End Produk Nav -->
+        <li class="nav-item">
+            <a class="nav-link <?php echo (uri_string() == 'faq') ? "" : "collapsed" ?>" href="faq">
+                <i class="bi bi-info-circle"></i>
+                <span>F.A.Q</span>
+            </a>
+        </li><!-- End F.A.Q Nav -->
 
 </aside><!-- End Sidebar-->

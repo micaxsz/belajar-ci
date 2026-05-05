@@ -18,9 +18,21 @@ class AuthController extends BaseController
             $username = $this->request->getVar('username');
             $password = $this->request->getVar('password');
 
-            $dataUser = ['username' => 'april', 'password' => '202cb962ac59075b964b07152d234b70', 'role' => 'admin']; // passw 123
+            $Users = [
+                ['username' => 'mica', 'password' => '202cb962ac59075b964b07152d234b70', 'role' => 'admin'],
+                ['username' => 'dias', 'password' => '202cb962ac59075b964b07152d234b70', 'role' => 'guest']
+            ]; // passw 123
 
-            if ($username == $dataUser['username']) {
+
+            $dataUser = null;
+            foreach ($Users as $user) {
+                if ($user['username'] == $username) {
+                    $dataUser = $user;
+                    break;
+                }
+            }
+
+            if ($dataUser) {
                 if (md5($password) == $dataUser['password']) {
                     session()->set([
                         'username' => $dataUser['username'],

@@ -8,4 +8,19 @@ class Home extends BaseController
     {
         return view('V_home');
     }
+
+    public function produk(): string
+    {
+        return view('v_produk');
+    }
+
+    public function keranjang(): string
+    {
+        return view('v_keranjang');
+    }
+
+    public function faq(): string
+    {
+        return view('v_faq');
+    }
 }
