@@ -26,7 +26,7 @@
     <link href="<?= base_url() ?>NiceAdmin/assets/vendor/quill/quill.snow.css" rel="stylesheet">
     <link href="<?= base_url() ?>NiceAdmin/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
     <link href="<?= base_url() ?>NiceAdmin/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="<?= base_url() ?>NiceAdmin/<?= base_url() ?>NiceAdmin/assets/vendor/simple-datatables/style.css"
+    <link href="<?= base_url() ?>NiceAdmin/assets/vendor/simple-datatables/style.css"
         rel="stylesheet">
 
     <!-- Template Main CSS File -->
@@ -57,7 +57,7 @@
             <h1>Data Tables</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="<?= base_url() ?>">Home</a></li>
                     <li class="breadcrumb-item">Tables</li>
                     <li class="breadcrumb-item active">Data</li>
                 </ol>
