@@ -3,13 +3,12 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-
 use App\Models\ProductModel;
 use Dompdf\Dompdf;
+
 class ProdukController extends BaseController
 {
-    protected $product;
+    protected $productModel;
 
     function __construct()
     {
@@ -25,30 +24,29 @@ class ProdukController extends BaseController
     }
 
     /*
-fungsi dibawah ini yang bertanggung jawab untuk
-menangani request dari http://localhost:8080/produk/edit/23
-*/
+    fungsi dibawah ini yang bertanggung jawab untuk
+    menangani request dari http://localhost:8080/produk/edit/23
+    */
     public function edit($id)
     {
         $dataProduk = $this->productModel->find($id);
 
         $dataForm = [
-            'nama' => $this->request->getPost('nama'),
-            'harga' => $this->request->getPost('harga'),
+            'nama'   => $this->request->getPost('nama'),
+            'harga'  => $this->request->getPost('harga'),
             'jumlah' => $this->request->getPost('jumlah')
         ];
 
         if ($this->request->getPost('check') == 1) {
-            if ($dataProduk['foto'] != '' and file_exists("img/" . $dataProduk['foto'] . "")) {
-                unlink("img/" . $dataProduk['foto']);
+            if ($dataProduk['foto'] != '' && file_exists('img/' . $dataProduk['foto'])) {
+                unlink('img/' . $dataProduk['foto']);
             }
 
             $dataFoto = $this->request->getFile('foto');
 
             if ($dataFoto->isValid()) {
-                $fileName = $dataFoto->getRandomName();
+                $fileName         = $dataFoto->getRandomName();
                 $dataFoto->move('img/', $fileName);
-
                 $dataForm['foto'] = $fileName;
             }
         }
@@ -63,15 +61,14 @@ menangani request dari http://localhost:8080/produk/edit/23
         $dataFoto = $this->request->getFile('foto');
 
         $dataForm = [
-            'nama' => $this->request->getPost('nama'),
-            'harga' => $this->request->getPost('harga'),
+            'nama'   => $this->request->getPost('nama'),
+            'harga'  => $this->request->getPost('harga'),
             'jumlah' => $this->request->getPost('jumlah')
         ];
 
         if ($dataFoto->isValid()) {
-            $fileName = $dataFoto->getRandomName();
+            $fileName         = $dataFoto->getRandomName();
             $dataFoto->move('img/', $fileName);
-
             $dataForm['foto'] = $fileName;
         }
 
@@ -79,9 +76,9 @@ menangani request dari http://localhost:8080/produk/edit/23
 
         return redirect('produk')->with('success', 'Data Berhasil Ditambah');
     }
+
     public function delete($id)
     {
-        $dataProduk = $this->productModel->find($id);
         $this->productModel->delete($id);
 
         return redirect('produk')->with('success', 'Data Berhasil Dihapus');
@@ -113,8 +110,6 @@ menangani request dari http://localhost:8080/produk/edit/23
         $dompdf->render();
 
         // Download / tampilkan PDF
-        $dompdf->stream($filename, [
-            'Attachment' => true
-        ]);
+        $dompdf->stream($filename, ['Attachment' => true]);
     }
 }

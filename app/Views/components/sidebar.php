@@ -22,6 +22,14 @@
                 <span>Produk</span>
             </a>
         </li><!-- End Produk Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link <?php echo (uri_string() == 'history') ? "" : "collapsed" ?>" href="history">
+                <i class="bi bi-person"></i>
+                <span>History</span>
+            </a>
+        </li><!-- End History Nav -->
+
         <li class="nav-item">
             <a class="nav-link <?php echo (uri_string() == 'faq') ? "" : "collapsed" ?>" href="<?= base_url('faq') ?>">
                 <i class="bi bi-info-circle"></i>

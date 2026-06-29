@@ -142,12 +142,16 @@ class TransaksiController extends BaseController
         $data = $response['data'] ?? [];
 
         foreach ($data as $item) {
-            $results[] = [
-                'service'     => $item['service']     ?? '',
-                'description' => $item['description'] ?? '',
-                'cost'        => $item['cost']         ?? 0,
-                'etd'         => $item['etd']          ?? '-',
-            ];
+            foreach ($item['costs'] ?? [] as $costItem) {
+                foreach ($costItem['cost'] ?? [] as $detail) {
+                    $results[] = [
+                        'service'     => $costItem['service'] ?? '',
+                        'description' => $costItem['description'] ?? '',
+                        'cost'        => $detail['value'] ?? 0,
+                        'etd'         => $detail['etd'] ?? '-',
+                    ];
+                }
+            }
         }
 
         return $this->response->setJSON($results);
