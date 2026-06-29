@@ -4,4 +4,4 @@ Content-Type: application/x-www-form-urlencoded
 Accept: application/json
 key: pqCoi5S9535eed50e5dc3bfel5WidcdY
 
-origin=
+origin=64999&destination=64942&weight=1000&courier=jne
