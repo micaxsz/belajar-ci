@@ -16,6 +16,18 @@
         </form>
     </div><!-- End Search Bar -->
 
+    <?php
+    $diskonModel = new \App\Models\DiskonModel();
+    $activeDiskon = $diskonModel->where('tanggal', date('Y-m-d'))->first();
+    if (!empty($activeDiskon)):
+    ?>
+        <div class="ms-3 d-none d-lg-block">
+            <span class="badge bg-success p-2" style="font-size: 13px; font-weight: 600; background-color: #198754 !important;">
+                Hari ini ada diskon <?= number_to_currency($activeDiskon['nominal'], 'IDR', 'id_ID', 0) ?> per item
+            </span>
+        </div>
+    <?php endif; ?>
+
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
 

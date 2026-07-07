@@ -11,7 +11,16 @@ class DiskonSeeder extends Seeder
 
         $today = new \DateTime();
 
-        for ($i = 0; $i < 10; $i++) {
+        // Let's seed today with exactly 100,000 discount
+        $data[] = [
+            'tanggal' => $today->format('Y-m-d'),
+            'nominal' => 100000,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+            'deleted_at' => null,
+        ];
+
+        for ($i = 1; $i < 10; $i++) {
 
             $tanggal = clone $today;
             $tanggal->modify("+{$i} day");

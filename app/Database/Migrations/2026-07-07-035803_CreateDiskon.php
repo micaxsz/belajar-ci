@@ -37,12 +37,12 @@ class CreateDiskon extends Migration
 
         $this->forge->addUniqueKey('tanggal');
 
-        $this->forge->createTable('diskon');
+        $this->forge->createTable('discount');
     }
 
     public function down()
     {
-        $this->forge->dropTable('dicount');
+        $this->forge->dropTable('discount');
     }
 }
 

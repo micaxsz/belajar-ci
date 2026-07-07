@@ -11,20 +11,16 @@
         </li><!-- End Home Nav -->
 
         <li class="nav-item">
-            <a class="nav-link <?php echo (uri_string() == 'keranjang') ? "" : "collapsed" ?>" href="<?= base_url('keranjang') ?>">
+            <a class="nav-link <?php echo (uri_string() == 'keranjang') ? "" : "collapsed" ?>"
+                href="<?= base_url('keranjang') ?>">
                 <i class="bi bi-cart-check"></i>
                 <span>Keranjang</span>
             </a>
         </li><!-- End Keranjang Nav -->
-        <li class="nav-item">
-            <a class="nav-link <?php echo (uri_string() == 'produk') ? "" : "collapsed" ?>" href="<?= base_url('produk') ?>">
-                <i class="bi bi-receipt"></i>
-                <span>Produk</span>
-            </a>
-        </li><!-- End Produk Nav -->
 
         <li class="nav-item">
-            <a class="nav-link <?php echo (uri_string() == 'history') ? "" : "collapsed" ?>" href="<?= base_url('history') ?>">
+            <a class="nav-link <?php echo (uri_string() == 'history') ? "" : "collapsed" ?>"
+                href="<?= base_url('history') ?>">
                 <i class="bi bi-person"></i>
                 <span>History</span>
             </a>
@@ -36,5 +32,7 @@
                 <span>F.A.Q</span>
             </a>
         </li><!-- End F.A.Q Nav -->
+
+    </ul>
 
 </aside><!-- End Sidebar-->
