@@ -17,6 +17,7 @@
     </div><!-- End Search Bar -->
 
     <?php
+    helper('number');
     $diskonModel = new \App\Models\DiskonModel();
     $activeDiskon = $diskonModel->where('tanggal', date('Y-m-d'))->first();
     if (!empty($activeDiskon)):

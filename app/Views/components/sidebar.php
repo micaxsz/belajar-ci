@@ -10,6 +10,15 @@
             </a>
         </li><!-- End Home Nav -->
 
+        <?php if (session()->get('role') == 'admin'): ?>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (uri_string() == 'diskon') ? "" : "collapsed" ?>" href="<?= base_url('diskon') ?>">
+                    <i class="bi bi-tags"></i>
+                    <span>Diskon</span>
+                </a>
+            </li><!-- End Diskon Nav -->
+        <?php endif; ?>
+
         <li class="nav-item">
             <a class="nav-link <?php echo (uri_string() == 'keranjang') ? "" : "collapsed" ?>"
                 href="<?= base_url('keranjang') ?>">
