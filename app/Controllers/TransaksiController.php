@@ -167,9 +167,12 @@ class TransaksiController extends BaseController
         $db = \Config\Database::connect();
         $db->transStart();
 
+        $diskon = (int) session()->get('active_diskon');
+
         $subtotal = 0;
         foreach ($cartItems as $item) {
-            $subtotal += $item['qty'] * $item['price'];
+            $hargaDiskon = max(0, (int)$item['price'] - $diskon);
+            $subtotal += $item['qty'] * $hargaDiskon;
         }
 
         $ongkir = (int) $this->request->getPost('ongkir');
@@ -192,12 +195,13 @@ class TransaksiController extends BaseController
 
         // insert transaction detail
         foreach ($cartItems as $item) {
+            $hargaDiskon = max(0, (int)$item['price'] - $diskon);
             $this->transactionDetailModel->insert([
                 'transaction_id' => $transactionId,
-                'product_id' => $item['id'],
-                'jumlah' => $item['qty'],
-                'diskon' => 0,
-                'subtotal_harga' => $item['qty'] * $item['price']
+                'product_id'     => $item['id'],
+                'jumlah'         => $item['qty'],
+                'diskon'         => $diskon,
+                'subtotal_harga' => $item['qty'] * $hargaDiskon
             ]);
         }
 

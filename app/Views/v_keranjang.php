@@ -9,6 +9,8 @@ if (session()->getFlashData('success')) {
     </div>
     <?php
 }
+
+$diskon = (int) session()->get('active_diskon');
 ?>
 <?= form_open('keranjang/edit') ?>
 <!-- Table with stripped rows -->
@@ -26,17 +28,29 @@ if (session()->getFlashData('success')) {
     <tbody>
         <?php
         $i = 1;
+        $grandTotal = 0;
         if (!empty($items)):
             foreach ($items as $index => $item):
+                $hargaAsli   = (int) $item['price'];
+                $hargaDiskon = max(0, $hargaAsli - $diskon);
+                $subtotal    = $hargaDiskon * (int) $item['qty'];
+                $grandTotal += $subtotal;
                 ?>
                 <tr>
                     <td><?= $item['name'] ?></td>
                     <td><img src="<?= base_url() . "img/" . $item['options']['foto'] ?>" width="100px"></td>
-                    <td><?= number_to_currency($item['price'], 'IDR') ?></td>
+                    <td>
+                        <?php if ($diskon > 0): ?>
+                            <del class="text-danger"><?= number_to_currency($hargaAsli, 'IDR') ?></del><br>
+                            <?= number_to_currency($hargaDiskon, 'IDR') ?>
+                        <?php else: ?>
+                            <?= number_to_currency($hargaAsli, 'IDR') ?>
+                        <?php endif; ?>
+                    </td>
                     <td><input type="number" min="1" name="qty<?= $i++ ?>" class="form-control" value="<?= $item['qty'] ?>">
                     </td>
                     <td>
-                        <?= number_to_currency($item['subtotal'], 'IDR') ?>
+                        <?= number_to_currency($subtotal, 'IDR') ?>
                     </td>
 
                     <td>
@@ -52,7 +66,7 @@ if (session()->getFlashData('success')) {
 </table>
 
 <div class="alert alert-info">
-    <?= "Total = " . number_to_currency($total, 'IDR') ?>
+    <?= "Total = " . number_to_currency($grandTotal, 'IDR') ?>
 </div>
 
 
@@ -63,4 +77,4 @@ if (session()->getFlashData('success')) {
     <a class="btn btn-success" href="<?php echo base_url() ?>checkout">Selesai Belanja</a>
 <?php endif; ?>
 <?= form_close() ?>
-<?= $this->endSection() ?>
+<?= $this->endSection() ?>

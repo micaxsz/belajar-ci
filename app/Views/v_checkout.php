@@ -1,5 +1,14 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
+<?php
+$diskon = (int) session()->get('active_diskon');
+$grandTotal = 0;
+if (!empty($items)) {
+    foreach ($items as $it) {
+        $grandTotal += max(0, (int)$it['price'] - $diskon) * (int)$it['qty'];
+    }
+}
+?>
 
 <div class="row">
     <div class="col-lg-6">
@@ -68,19 +77,27 @@
                 <?php
                 if (!empty($items)):
                     foreach ($items as $index => $item):
+                        $hargaAsli   = (int) $item['price'];
+                        $hargaDiskon = max(0, $hargaAsli - $diskon);
+                        $rowSubtotal = $hargaDiskon * (int) $item['qty'];
                         ?>
                         <tr>
                             <td>
                                 <?= $item['name'] ?>
                             </td>
                             <td>
-                                <?= number_to_currency($item['price'], 'IDR') ?>
+                                <?php if ($diskon > 0): ?>
+                                    <del class="text-danger"><?= number_to_currency($hargaAsli, 'IDR') ?></del><br>
+                                    <?= number_to_currency($hargaDiskon, 'IDR') ?>
+                                <?php else: ?>
+                                    <?= number_to_currency($hargaAsli, 'IDR') ?>
+                                <?php endif; ?>
                             </td>
                             <td>
                                 <?= $item['qty'] ?>
                             </td>
                             <td>
-                                <?= number_to_currency($item['price'] * $item['qty'], 'IDR') ?>
+                                <?= number_to_currency($rowSubtotal, 'IDR') ?>
                             </td>
                         </tr>
                         <?php
@@ -91,14 +108,14 @@
                     <td colspan="2"></td>
                     <td>Subtotal</td>
                     <td>
-                        <?= number_to_currency($total, 'IDR') ?>
+                        <?= number_to_currency($grandTotal, 'IDR') ?>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2"></td>
                     <td>Total</td>
                     <td><span id="total">
-                            <?= number_to_currency($total, 'IDR') ?>
+                            <?= number_to_currency($grandTotal, 'IDR') ?>
                         </span></td>
                 </tr>
             </tbody>
@@ -112,7 +129,7 @@
     $(document).ready(function () {
 
         let ongkir = 0;
-        let subtotal = <?= $total ?>;
+        let subtotal = <?= $grandTotal ?>;
 
         function hitungTotal() {
             let total = subtotal + ongkir;

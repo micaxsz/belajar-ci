@@ -41,5 +41,12 @@ abstract class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
         // $this->session = service('session');
+
+        // Load active diskon for today into session (once per request)
+        helper('number');
+        $diskonModel = new \App\Models\DiskonModel();
+        $activeDiskon = $diskonModel->where('tanggal', date('Y-m-d'))->first();
+        $nominal = !empty($activeDiskon) ? (int) $activeDiskon['nominal'] : 0;
+        session()->set('active_diskon', $nominal);
     }
 }
