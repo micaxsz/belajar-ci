@@ -24,7 +24,7 @@ class CreateDiskon extends Migration
             'created_at' => [
                 'type' => 'DATETIME',
             ],
-            'uploaded_at' => [
+            'updated_at' => [
                 'type' => 'DATETIME',
             ],
             'deleted_at' => [
@@ -35,7 +35,6 @@ class CreateDiskon extends Migration
 
         $this->forge->addKey('id', true);
 
-        // Supaya tidak ada diskon pada tanggal yang sama
         $this->forge->addUniqueKey('tanggal');
 
         $this->forge->createTable('diskon');
@@ -43,7 +42,7 @@ class CreateDiskon extends Migration
 
     public function down()
     {
-        $this->forge->dropTable('diskon');
+        $this->forge->dropTable('dicount');
     }
 }
 

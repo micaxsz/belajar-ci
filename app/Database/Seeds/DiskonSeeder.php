@@ -20,12 +20,12 @@ class DiskonSeeder extends Seeder
                 'tanggal' => $tanggal->format('Y-m-d'),
                 'nominal' => rand(5000, 50000),
                 'created_at' => date('Y-m-d H:i:s'),
-                'uploaded_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
                 'deleted_at' => null,
             ];
         }
 
-        $this->db->table('diskon')->insertBatch($data);
+        $this->db->table('discount')->insertBatch($data);
     }
 }
 
