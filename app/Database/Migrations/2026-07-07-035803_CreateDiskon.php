@@ -9,7 +9,7 @@ class CreateDiskon extends Migration
     public function up()
     {
         $this->forge->addField([
-            'id_diskon' => [
+            'id' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'unsigned' => true,
@@ -18,15 +18,24 @@ class CreateDiskon extends Migration
             'tanggal' => [
                 'type' => 'DATE',
             ],
-            'persen' => [
-                'type' => 'DECIMAL',
-                'constraint' => '5,2',
+            'nominal' => [
+                'type' => 'DOUBLE',
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+            ],
+            'uploaded_at' => [
+                'type' => 'DATETIME',
+            ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
             ],
         ]);
 
-        $this->forge->addKey('id_diskon', true);
+        $this->forge->addKey('id', true);
 
-        // Agar tidak ada tanggal yang sama
+        // Supaya tidak ada diskon pada tanggal yang sama
         $this->forge->addUniqueKey('tanggal');
 
         $this->forge->createTable('diskon');
@@ -37,3 +46,4 @@ class CreateDiskon extends Migration
         $this->forge->dropTable('diskon');
     }
 }
+
