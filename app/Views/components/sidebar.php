@@ -24,7 +24,7 @@
         </li><!-- End Produk Nav -->
 
         <li class="nav-item">
-            <a class="nav-link <?php echo (uri_string() == 'history') ? "" : "collapsed" ?>" href="history">
+            <a class="nav-link <?php echo (uri_string() == 'history') ? "" : "collapsed" ?>" href="<?= base_url('history') ?>">
                 <i class="bi bi-person"></i>
                 <span>History</span>
             </a>
