@@ -1,7 +1,19 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
-History Transaksi Pembelian <strong><?= $username ?></strong>
+<h3>Pembelian</h3>
+<p class="text-muted">History Transaksi Pembelian</p>
 <hr>
+<?php if (session()->getFlashdata('success')) : ?>
+    <div class="alert alert-success">
+        <?= session()->getFlashdata('success') ?>
+    </div>
+<?php endif; ?>
+<?php if (session()->getFlashdata('error')) : ?>
+    <div class="alert alert-danger">
+        <?= session()->getFlashdata('error') ?>
+    </div>
+<?php endif; ?>
+
 <div class="table-responsive">
     <!-- Table with stripped rows -->
     <table class="table datatable">
@@ -9,10 +21,12 @@ History Transaksi Pembelian <strong><?= $username ?></strong>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">ID Pembelian</th>
+                <th scope="col">Pembeli</th>
                 <th scope="col">Waktu Pembelian</th>
                 <th scope="col">Total Bayar</th>
                 <th scope="col">Alamat</th>
-                <th scope="col"></th>
+                <th scope="col">Status</th>
+                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -23,13 +37,22 @@ History Transaksi Pembelian <strong><?= $username ?></strong>
                     <tr>
                         <th scope="row"><?= $index + 1 ?></th>
                         <td><?= $item['id'] ?></td>
+                        <td><?= $item['username'] ?></td>
                         <td><?= $item['created_at'] ?></td>
                         <td><?= number_to_currency($item['total_harga'], 'IDR') ?></td>
                         <td><?= $item['alamat'] ?></td>
                         <td>
+                            <?= ($item['status'] == "1")
+                                ? '<span class="badge bg-primary">Sudah Selesai</span>'
+                                : '<span class="badge bg-warning text-dark">Belum Selesai</span>' ?>
+                        </td>
+                        <td>
                             <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#detailModal-<?= $item['id'] ?>">
                                 Detail
                             </button>
+                            <a href="<?= base_url('pembelian/ubah-status/' . $item['id']) ?>" class="btn btn-info btn-sm text-white" onclick="return confirm('Apakah Anda yakin ingin mengubah status pesanan ini?');">
+                                Ubah Status
+                            </a>
                         </td>
                     </tr> 
             <?php

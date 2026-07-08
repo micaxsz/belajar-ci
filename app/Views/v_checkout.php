@@ -163,7 +163,7 @@ if (!empty($items)) {
 
             let id_kelurahan = $(this).val();
 
-            $("#layanan").empty();
+            $("#layanan").empty().append($('<option value="">-- Memuat layanan... --</option>'));
 
             ongkir = 0;
             hitungTotal();
@@ -178,21 +178,30 @@ if (!empty($items)) {
 
                     console.log('Costs response:', data);
 
-                    data.forEach(function (item) {
+                    $("#layanan").empty();
 
+                    if (!data || data.length === 0) {
+                        $("#layanan").append($('<option value="">-- Tidak ada layanan tersedia --</option>'));
+                        return;
+                    }
+
+                    data.forEach(function (item) {
                         $("#layanan").append(
                             $("<option>", {
                                 value: item.cost,
-                                text: `${item.description} (${item.service}) estimasi ${item.etd}`
+                                text: `${item.description} (${item.service}) : estimasi ${item.etd}`
                             })
                         );
-
                     });
+
+                    // Trigger change agar ongkir langsung terhitung dari opsi pertama
+                    $("#layanan").trigger("change");
 
                 },
                 error: function (xhr, status, error) {
                     console.error('Costs AJAX error:', status, error);
                     console.error('Response:', xhr.responseText);
+                    $("#layanan").empty().append($('<option value="0">-- Gagal memuat layanan, coba lagi --</option>'));
                 }
             });
 

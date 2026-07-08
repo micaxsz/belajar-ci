@@ -142,14 +142,28 @@ class TransaksiController extends BaseController
         $data = $response['data'] ?? [];
 
         foreach ($data as $item) {
-            foreach ($item['costs'] ?? [] as $costItem) {
-                foreach ($costItem['cost'] ?? [] as $detail) {
-                    $results[] = [
-                        'service'     => $costItem['service'] ?? '',
-                        'description' => $costItem['description'] ?? '',
-                        'cost'        => $detail['value'] ?? 0,
-                        'etd'         => $detail['etd'] ?? '-',
-                    ];
+            // Jika format Komerce (flattened), setiap $item langsung berisi info layanan dan cost
+            if (isset($item['cost']) && !is_array($item['cost'])) {
+                $results[] = [
+                    'service'     => $item['service'] ?? '',
+                    'description' => $item['description'] ?? '',
+                    'cost'        => $item['cost'],
+                    'etd'         => $item['etd'] ?? '-',
+                ];
+            } 
+            // Jika format RajaOngkir standar, ada array 'costs' di dalam setiap $item (kurir)
+            elseif (isset($item['costs']) && is_array($item['costs'])) {
+                foreach ($item['costs'] as $costItem) {
+                    if (isset($costItem['cost']) && is_array($costItem['cost'])) {
+                        foreach ($costItem['cost'] as $detail) {
+                            $results[] = [
+                                'service'     => $costItem['service'] ?? '',
+                                'description' => $costItem['description'] ?? '',
+                                'cost'        => $detail['value'] ?? 0,
+                                'etd'         => $detail['etd'] ?? '-',
+                            ];
+                        }
+                    }
                 }
             }
         }
@@ -234,5 +248,36 @@ class TransaksiController extends BaseController
         ];
 
         return view('v_history', $data);
+    }
+
+    public function pembelian()
+    {
+        $transactions = $this->transactionModel->findAll();
+
+        $transactionIds = !empty($transactions) ? array_column($transactions, 'id') : [];
+        $products = !empty($transactionIds)
+            ? $this->transactionDetailModel->getProductsByTransactionIds($transactionIds)
+            : [];
+
+        $data = [
+            'transactions' => $transactions,
+            'products'     => $products
+        ];
+
+        return view('v_pembelian', $data);
+    }
+
+    public function ubah_status($id)
+    {
+        $transaction = $this->transactionModel->find($id);
+        if ($transaction) {
+            $newStatus = $transaction['status'] == 0 ? 1 : 0;
+            $this->transactionModel->update($id, ['status' => $newStatus]);
+            session()->setFlashdata('success', 'Status pesanan berhasil diubah');
+        } else {
+            session()->setFlashdata('error', 'Pesanan tidak ditemukan');
+        }
+        
+        return redirect()->to(base_url('pembelian'));
     }
 }

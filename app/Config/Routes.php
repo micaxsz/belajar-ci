@@ -46,6 +46,9 @@ $routes->get('history', 'TransaksiController::history', ['filter' => 'auth']);
 $routes->get('ajax/destinations', 'TransaksiController::destinations', ['filter' => 'auth']);
 $routes->get('ajax/costs', 'TransaksiController::costs', ['filter' => 'auth']);
 
+$routes->get('pembelian', 'TransaksiController::pembelian', ['filter' => 'auth']);
+$routes->get('pembelian/ubah-status/(:any)', 'TransaksiController::ubah_status/$1', ['filter' => 'auth']);
+
 $routes->resource('api/products', ['controller' => 'Api\ProdukController']);
 
 $routes->get('api/transactions', 'Api\TransaksiController::index');
