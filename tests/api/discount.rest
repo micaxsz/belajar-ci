@@ -1,0 +1,35 @@
+### index
+GET http://localhost:8080/api/discounts?page=1&per_page=5
+Accept: application/json
+Authorization: Bearer my-secret-token
+
+### show
+GET http://localhost:8080/api/discounts/1
+Authorization: Bearer my-secret-token
+
+### create
+POST http://localhost:8080/api/discounts
+Authorization: Bearer my-secret-token
+Content-Type: application/json
+
+{
+    "kode_voucher": "PROMO2026",
+    "nominal": 20000,
+    "tanggal_mulai": "2026-07-01",
+    "tanggal_selesai": "2026-07-31",
+    "aktif": 1
+}
+
+### update
+PUT http://localhost:8080/api/discounts/1
+Authorization: Bearer my-secret-token
+Content-Type: application/json
+
+{
+    "nominal": 25000,
+    "aktif": 0
+}
+
+### delete
+DELETE http://localhost:8080/api/discounts/1
+Authorization: Bearer my-secret-token

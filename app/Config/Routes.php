@@ -50,5 +50,6 @@ $routes->get('pembelian', 'TransaksiController::pembelian', ['filter' => 'auth']
 $routes->get('pembelian/ubah-status/(:any)', 'TransaksiController::ubah_status/$1', ['filter' => 'auth']);
 
 $routes->resource('api/products', ['controller' => 'Api\ProdukController']);
+$routes->resource('api/discounts', ['controller' => 'Api\DiskonController']);
 
 $routes->get('api/transactions', 'Api\TransaksiController::index');
